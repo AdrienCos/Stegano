@@ -133,7 +133,7 @@ if arguments.command != 'list-generators':
 
 if arguments.command == 'hide':
     if arguments.secret_message != None:
-        secret = arguments.secret_message
+        secret = tools.str2base64(arguments.secret_message)
     elif arguments.secret_file != "":
         secret = tools.binary2base64(arguments.secret_file)
 
@@ -152,12 +152,12 @@ elif arguments.command == 'reveal':
     except IndexError:
         print("Impossible to detect message.")
         exit(0)
+    data = tools.base642binary(secret)
     if arguments.secret_binary != None:
-        data = tools.base642binary(secret)
-        with open(arguments.secret_binary, "w") as f:
+        with open(arguments.secret_binary, "wb") as f:
             f.write(data)
     else:
-        print(secret)
+        print(data.decode())
 
 elif arguments.command == 'list-generators':
     all_generators = inspect.getmembers(generators, inspect.isfunction)

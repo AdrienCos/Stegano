@@ -93,6 +93,13 @@ def n_at_a_time(
     return itertools.zip_longest(*[it] * n, fillvalue=fillvalue)
 
 
+def str2base64(input: str) -> str:
+    """Convert a string to base64
+    """
+    encoded = base64.b64encode(input.encode())
+    return encoded.decode()
+
+
 def binary2base64(binary_file: str) -> str:
     """Convert a binary file (OGG, executable, etc.) to a
     printable string.
